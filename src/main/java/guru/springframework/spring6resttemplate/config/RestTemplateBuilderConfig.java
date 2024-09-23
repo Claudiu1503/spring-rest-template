@@ -18,15 +18,10 @@ public class RestTemplateBuilderConfig {
     @Bean
     RestTemplateBuilder restTemplateBuilder(RestTemplateBuilderConfigurer configurer){
 
-        assert rootUrl !=null;
+        assert rootUrl != null;
 
-        RestTemplateBuilder builder = configurer.configure(new RestTemplateBuilder());
-
-        DefaultUriBuilderFactory uriBuilderFactory = new
-                DefaultUriBuilderFactory(rootUrl);
-
-        RestTemplateBuilder builderWithAuth = builder.basicAuthentication("adi","password");
-
-        return builderWithAuth.uriTemplateHandler(uriBuilderFactory);
+        return configurer.configure(new RestTemplateBuilder())
+                .basicAuthentication("adi", "password")
+                .uriTemplateHandler(new DefaultUriBuilderFactory(rootUrl));
     }
 }
